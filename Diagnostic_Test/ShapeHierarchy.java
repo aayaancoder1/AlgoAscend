@@ -14,6 +14,7 @@ class Rectangle implements Shape
 {
     public double area(int l, int b){
         return l * b;
+        return 0;
     }
 }
 
