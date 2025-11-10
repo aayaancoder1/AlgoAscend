@@ -30,7 +30,10 @@ public class FastFingerGame1 extends JFrame implements KeyListener
     JPanel colorPanel = new JPanel();
     JTextArea display = new JTextArea();
     JTextField playerInput = new JTextField(5);
+
     JButton startBtn = new JButton("Start Game");
+    JButton restartBtn = new JButton("Restart");
+    JButton quitBtn = new JButton("Quit");
 
     int numPlayers;
     char keys[];
@@ -54,11 +57,29 @@ public class FastFingerGame1 extends JFrame implements KeyListener
         bottom.add(new JLabel("Number of Players:"));
         bottom.add(playerInput);
         bottom.add(startBtn);
+        bottom.add(restartBtn);
+        bottom.add(quitBtn);
         add(bottom, BorderLayout.SOUTH);
+
+        restartBtn.setEnabled(false); // disabled initially
 
         startBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setupGame();
+            }
+        });
+
+        restartBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                display.append("\nRestarting...\n");
+                startRound();
+                requestFocusInWindow();
+            }
+        });
+
+        quitBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
 
@@ -103,6 +124,7 @@ public class FastFingerGame1 extends JFrame implements KeyListener
             text += "\nWait for GREEN...\n";
             display.setText(text);
 
+            restartBtn.setEnabled(false);
             startRound();
             requestFocusInWindow();
 
@@ -141,6 +163,9 @@ public class FastFingerGame1 extends JFrame implements KeyListener
             {
                 display.setText("Winner: " + names[i] + " (Key " + key + ")\n");
                 green = false;
+
+                restartBtn.setEnabled(true); // enable restart now
+
                 return;
             }
         }
